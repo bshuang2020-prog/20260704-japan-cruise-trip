@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>九州郵輪兩日岸上行程（7/6 鹿兒島・7/7 宮崎）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+  :root{--ink:#243034; --sand:#F5EFE2; --line:#d9cfb8;
+    --green:#2E7D32; --green-d:#1B5E20; --amber:#E0871A; --amber-d:#B96A06;
+    --coral:#D6455B; --coral-d:#B22E44; --indigo:#5B53A6; --indigo-d:#433C86;
+    --teal:#1c84a8; --teal-d:#136480; --port:#2b6b73;}
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html,body{background:#cfcabb; font-family:'Noto Sans TC',sans-serif; color:var(--ink); -webkit-text-size-adjust:100%;}
+  .wrap{display:flex; justify-content:center; padding:12px;}
+  .poster{width:100%; max-width:1160px; background:linear-gradient(180deg,#eaf6f7 0%, var(--sand) 22%, var(--sand) 100%);
+    border-radius:12px; box-shadow:0 12px 36px rgba(0,0,0,.2); padding:0 16px 16px; display:flex; flex-direction:column; gap:13px;}
+  .tabs{display:flex; gap:8px; padding-top:14px;}
+  .tabs a.tab{text-decoration:none;text-align:center;display:flex;align-items:center;justify-content:center;}
+  .tab{flex:1; font-weight:900; font-size:15px; padding:11px 12px; border-radius:12px; border:1.5px solid var(--line); background:#e9e0cc; color:#7a705c; cursor:pointer;}
+  .ship-tab{text-decoration:none;text-align:center;display:flex;align-items:center;justify-content:center;background:#0b72b9!important;color:#fff!important;border-color:#075b91!important;}
+.ship-tab:hover{filter:brightness(1.08);}
+.tab.active{background:#fff; color:var(--green-d); border-color:var(--green); box-shadow:0 3px 10px rgba(0,0,0,.08);}
+  .title-bar{display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;}
+  .title-bar h1{font-size:24px; font-weight:900; color:var(--green-d); line-height:1.2;}
+  .title-bar h1 .tag{display:inline-block; font-size:14px; color:#fff; background:var(--teal); border-radius:20px; padding:2px 12px; margin-left:8px; vertical-align:middle; font-weight:700; white-space:nowrap;}
+  .ship-note{display:flex; align-items:center; gap:8px; background:#fff; border:2px solid #7fc3cc; border-radius:14px; padding:7px 13px; font-weight:700; font-size:13px; color:#326066;}
+  .ship-note b{color:var(--coral-d);}
+  .weather{display:flex; align-items:center; gap:12px; flex-wrap:wrap; background:#fff; border:1px solid var(--line); border-radius:14px; padding:11px 14px; box-shadow:0 3px 12px rgba(0,0,0,.06);}
+  .weather .wx{display:flex; align-items:center; gap:10px;} .weather .wico{font-size:30px; line-height:1;}
+  .weather .wmain .d{font-weight:900; font-size:14px;} .weather .wmain .t{font-size:13px; color:#566;} .weather .wmain .t b{color:var(--coral-d);}
+  .weather .tip{flex:1; min-width:240px; font-size:13px; font-weight:600; padding:8px 12px; border-radius:10px; background:#eef6ee; color:#2c4d2e; line-height:1.5;}
+  .weather .tip.rain{background:#e7f0fb; color:#274b7a;} .weather .tip b{font-weight:900;}
+  .weather .tip .wxalts{display:flex; gap:6px; flex-wrap:wrap; margin-top:7px;}
+  .weather .tip .wxbtn{font-size:12px; font-weight:800; border:0; border-radius:999px; padding:5px 11px; cursor:pointer; color:#fff;}
+  .wxbtn.aq{background:#1c84a8;} .wxbtn.isf{background:#8a6d2f;} .wxbtn.aeon{background:#b3406b;}
+  .mapwrap{background:#fff; border-radius:18px; border:1px solid var(--line); box-shadow:0 4px 14px rgba(0,0,0,.07); overflow:hidden; display:flex; flex-direction:column; min-height:380px;}
+  .chips{display:flex; gap:6px; padding:8px; overflow-x:auto; background:#fbf7ec; border-bottom:1px solid var(--line);}
+  .chip{flex:none; font-size:12.5px; font-weight:800; border:1.5px solid #d7cdb6; background:#fff; color:#4a5258; border-radius:999px; padding:6px 12px; cursor:pointer; white-space:nowrap; text-decoration:none;}
+  .chip[data-place="ov"].active{background:#2b545b; border-color:#2b545b; color:#fff;}
+  .chip[data-place="port"].active{background:var(--port); border-color:var(--port); color:#fff;}
+  .chip[data-place="p1"].active{background:var(--green); border-color:var(--green); color:#fff;}
+  .chip[data-place="p2"].active{background:var(--amber); border-color:var(--amber); color:#fff;}
+  .chip[data-place="p3"].active{background:var(--coral); border-color:var(--coral); color:#fff;}
+  .chip[data-place="p4"].active{background:var(--indigo); border-color:var(--indigo); color:#fff;}
+  .chip[data-place="p5"].active{background:var(--teal); border-color:var(--teal); color:#fff;}
+  .chip.route{background:#eaf6f7; border-color:#7fc3cc; color:#236068;}
+  .gmap{flex:1; width:100%; border:0; display:block; min-height:320px;}
+  .maphint{font-size:11.5px; color:#6b6f72; text-align:center; padding:7px 8px; background:#fbf7ec; border-top:1px solid var(--line);}
+  .cards{display:grid; gap:14px; grid-template-columns:repeat(auto-fit,minmax(300px,1fr));}
+  .card{background:#fff; border-radius:16px; border:1px solid var(--line); box-shadow:0 4px 14px rgba(0,0,0,.07); overflow:hidden; display:flex; flex-direction:column; cursor:pointer; transition:transform .12s, box-shadow .12s;}
+  .card:hover{transform:translateY(-2px); box-shadow:0 8px 20px rgba(0,0,0,.12);} .card:focus-visible{outline:3px solid #2b545b;}
+  .card .head{display:flex; align-items:center; gap:10px; padding:9px 13px; color:#fff;}
+  .card .head .num{width:28px; height:28px; border-radius:50%; background:rgba(255,255,255,.3); display:flex; align-items:center; justify-content:center; font-weight:900; font-size:16px; flex:none;}
+  .card .head .ttl{font-weight:900; font-size:17px; line-height:1.1;}
+  .card .head .time{margin-left:auto; font-weight:700; font-size:12px; background:rgba(0,0,0,.16); padding:3px 9px; border-radius:12px; white-space:nowrap;}
+  .card .body{display:flex; gap:12px; align-items:center; padding:12px 13px; flex:1;}
+  .card .icon{width:64px; height:64px; flex:none; border-radius:14px; display:flex; align-items:center; justify-content:center;}
+  .card .desc{font-size:12.8px; line-height:1.5; color:#3a4347;} .card .desc b{color:var(--ink);}
+  .card .tap{font-size:11.5px; font-weight:800; color:#fff; padding:7px 13px; display:flex; align-items:center; gap:5px;}
+  .c1 .head,.c1 .tap{background:var(--green);} .c1 .icon{background:#e7f2e7;}
+  .c2 .head,.c2 .tap{background:var(--amber);} .c2 .icon{background:#fdf0db;}
+  .c3 .head,.c3 .tap{background:var(--coral);} .c3 .icon{background:#fbe4e8;}
+  .c4 .head,.c4 .tap{background:var(--indigo);} .c4 .icon{background:#e9e7f5;}
+  .c5 .head,.c5 .tap{background:var(--teal);} .c5 .icon{background:#e1f1f6;}
+  .timeline{display:flex; gap:6px; flex-wrap:wrap;}
+  .step{flex:1 1 120px; display:flex; align-items:center; gap:8px; background:#fff; border:1px solid var(--line); border-radius:14px; padding:9px 10px;}
+  .step .dot{width:30px; height:30px; border-radius:9px; flex:none; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:900; font-size:13px;}
+  .step .lab .t{font-weight:900; font-size:12.5px;} .step .lab .s{font-size:10.5px; color:#6b6f72;}
+  .botgrid{display:grid; grid-template-columns:1fr 280px; gap:14px;}
+  .panel{background:#fff; border:1px solid var(--line); border-radius:16px; box-shadow:0 4px 14px rgba(0,0,0,.07); overflow:hidden;}
+  .panel .ph{background:#2b3a40; color:#fff; font-weight:900; font-size:14px; padding:9px 14px;}
+  .emg{padding:11px 14px; display:flex; flex-direction:column; gap:7px; font-size:13px;}
+  .emg .row{display:flex; gap:8px; align-items:flex-start; line-height:1.45;}
+  .emg .k{font-weight:900; color:#2b545b; flex:none;} .emg a{color:var(--coral-d); font-weight:800; text-decoration:none;}
+  .emg .note{font-size:11.5px; color:#8a8f93;}
+  .qr{padding:12px; text-align:center;}
+  .qr #qr{display:inline-block; padding:8px; background:#fff; border:1px solid var(--line); border-radius:10px;}
+  .qr #qr img,.qr #qr canvas{display:block;}
+  .qr .cap{font-size:12px; font-weight:700; color:#3a4347; margin-top:8px; line-height:1.4;} .qr .cap a{color:var(--coral-d);}
+  .tips{display:flex; gap:14px; flex-wrap:wrap; padding:2px; font-size:12px; color:#5d6266; font-weight:500;}
+  .tips .k{color:var(--green-d); font-weight:900;} .tips span b{color:var(--coral-d);}
+  .overlay{position:fixed; inset:0; background:rgba(0,0,0,.45); display:none; z-index:60; align-items:flex-end; justify-content:center;}
+  .overlay.open{display:flex;}
+  .sheet{background:#fff; width:100%; max-width:580px; border-radius:18px 18px 0 0; max-height:88vh; overflow:auto; box-shadow:0 -8px 30px rgba(0,0,0,.3);}
+  .sheet .sh-head{padding:14px 16px; color:#fff; display:flex; align-items:center; gap:10px; position:sticky; top:0; z-index:1;}
+  .sheet .sh-head .n{width:30px; height:30px; border-radius:50%; background:rgba(255,255,255,.28); display:flex; align-items:center; justify-content:center; font-weight:900;}
+  .sheet .sh-head .ttl{font-weight:900; font-size:19px;}
+  .sheet .sh-head .close{margin-left:auto; background:rgba(255,255,255,.25); border:0; color:#fff; width:32px; height:32px; border-radius:50%; font-size:18px; cursor:pointer;}
+  .sheet .sh-body{padding:14px 16px 18px;}
+  .intro{font-size:13.5px; line-height:1.68; color:#3a4347; margin-bottom:13px;} .intro b{color:var(--ink);}
+  .meta{display:grid; grid-template-columns:auto 1fr; gap:6px 12px; font-size:13.5px; margin-bottom:12px;} .meta .mk{font-weight:900; color:#2b545b;}
+  .hl{margin:0 0 12px; list-style:none; font-size:13.5px; line-height:1.6;}
+  .hl li{padding-left:18px; position:relative;} .hl li:before{content:"◆"; position:absolute; left:0; color:var(--green); font-size:11px; top:3px;}
+  .hl.eat li:before{color:var(--coral);} .hl.buy li:before{color:var(--indigo);}
+  .seclbl{font-weight:900; color:#2b545b; margin:8px 0 6px; font-size:13.5px;}
+  .rest{border:1px solid var(--line); border-radius:12px; padding:10px 12px; margin-bottom:9px;}
+  .rest .rn{font-weight:900; font-size:14px;} .rest .rt{font-size:12.5px; color:#566; margin:2px 0 4px;} .rest a{font-size:12.5px; font-weight:800; color:var(--coral-d); text-decoration:none;}
+  .acts{display:flex; gap:8px; flex-wrap:wrap; margin-top:6px;}
+  .btn{flex:1 1 auto; text-align:center; font-weight:900; font-size:13.5px; padding:11px 12px; border-radius:12px; border:0; cursor:pointer; text-decoration:none;}
+  .btn.map{background:#2b545b; color:#fff;} .btn.nav{background:#eaf6f7; color:#236068; border:1.5px solid #7fc3cc;}
+  .callout{background:#fff7e6; border:1px solid #f0d9a0; color:#8a6512; font-weight:700; font-size:12.5px; border-radius:10px; padding:8px 11px; margin-bottom:12px;}
+  @media(max-width:860px){ .botgrid{grid-template-columns:1fr;} .title-bar h1{font-size:21px;} .mapwrap{min-height:340px;} }
+  @media(min-width:700px){ .overlay{align-items:center;} .sheet{border-radius:18px;} }
+  @media(max-width:430px){ .title-bar h1{font-size:18px;} .step{flex:1 1 46%;} .tab{font-size:13px;} }
+  /* guide */
+  #guide{padding-top:2px;}
+  .g-head{background:linear-gradient(145deg,#063b66,#0878b7); color:#fff; border-radius:16px; padding:18px; margin-bottom:13px;}
+  .g-eyebrow{font-weight:800; letter-spacing:.1em; color:#aee5ff; font-size:12px;}
+  .g-title{font-size:23px; font-weight:900; margin:4px 0;}
+  .g-sub{font-size:13px; color:#e6f6ff; line-height:1.5;}
+  .g-notice{background:#fff7df; border:1px solid #f4d884; border-left:5px solid #f2b544; padding:11px 14px; border-radius:12px; font-weight:700; color:#8a6512; font-size:13px; margin-bottom:15px; line-height:1.5;}
+  .g-sec{margin-bottom:20px;}
+  .g-h2{font-size:17px; font-weight:900; color:#063b66; margin-bottom:11px;}
+  .g-tl{display:flex; flex-direction:column; gap:10px; border-left:3px solid #b8dff4; padding-left:18px; margin-left:6px;}
+  .g-step{background:#fff; border:1px solid var(--line); border-radius:14px; padding:12px 14px; position:relative; box-shadow:0 3px 10px rgba(20,70,105,.05);}
+  .g-step:before{content:""; position:absolute; left:-25px; top:16px; width:11px; height:11px; background:#0b72b9; border:3px solid var(--sand); border-radius:50%;}
+  .g-step b{color:#063b66;} .g-mini{font-size:12.5px; color:#62778a; margin-top:3px; line-height:1.5;}
+  .g-check{list-style:none; padding:6px 14px; margin:0; background:#fff; border:1px solid var(--line); border-radius:14px;}
+  .g-check li{display:flex; gap:10px; align-items:flex-start; padding:10px 0; border-bottom:1px dashed var(--line);}
+  .g-check li:last-child{border-bottom:0;}
+  .g-check input{width:20px; height:20px; margin-top:2px; accent-color:var(--green); flex:none;}
+  .g-check input:checked + label{text-decoration:line-through; color:#9aa7b0;}
+  .g-check label{cursor:pointer; font-weight:600;}
+  .g-grid{display:grid; grid-template-columns:1fr 1fr; gap:12px;}
+  .g-card{background:#fff; border:1px solid var(--line); border-radius:14px; padding:14px; box-shadow:0 3px 10px rgba(20,70,105,.05);}
+  .g-card b{color:#063b66; display:block; margin:5px 0 3px;} .g-card .g-mini{margin-top:2px;}
+  .g-card.alert{border-left:5px solid #c74444; background:#fff1f1;}
+  .g-badge{display:inline-block; font-size:11px; font-weight:900; padding:3px 9px; border-radius:999px;}
+  .g-badge.red{background:#ffebeb; color:#a82e2e;} .g-badge.orange{background:#fff0df; color:#a8570e;}
+  .g-subnav{display:flex; gap:6px; overflow-x:auto; margin-bottom:15px;}
+  .g-tab{flex:none; border:1.5px solid #cdddea; background:#fff; color:#063b66; font-weight:850; font-size:13px; padding:8px 14px; border-radius:999px; cursor:pointer; white-space:nowrap;}
+  .g-tab.active{background:#063b66; color:#fff; border-color:#063b66;}
+  .g-page{display:none;} .g-page.active{display:block;}
+  @media(max-width:560px){ .g-grid{grid-template-columns:1fr;} }
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="poster">
+  <div class="tabs">
+    <a class="tab" href="guide/index.html">📋 行前指南</a>
+    <a class="tab ship-tab" href="ship/index.html">🚢 船上怎麼玩</a>
+    <button class="tab" id="tab-d1" onclick="render('d1')">7/6 鹿兒島</button>
+    <button class="tab" id="tab-d2" onclick="render('d2')">7/7 宮崎</button>
+  </div>
+  <div id="itinerary">
+  <div class="title-bar"><h1 id="ttl"></h1><div class="ship-note" id="ship"></div></div>
+  <div class="weather"><div class="wx"><div class="wico" id="wico">⛅</div>
+    <div class="wmain"><div class="d" id="wdate">天氣</div><div class="t" id="wtemp">載入中…</div></div></div>
+    <div class="tip" id="wtip">查詢當天預報中…（需連網）</div></div>
+  <div class="mapwrap"><div class="chips" id="chips"></div>
+    <iframe class="gmap" id="gmap" title="Google 地圖" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    <div class="maphint" id="maphint"></div></div>
+  <div class="cards" id="cards"></div>
+  <div class="timeline" id="timeline"></div>
+  <div class="botgrid">
+    <div class="panel"><div class="ph">🆘 緊急資訊卡（出發前請再確認最新資訊）</div><div class="emg" id="emg"></div></div>
+    <div class="panel"><div class="ph">📲 掃碼開啟全程導航</div>
+      <div class="qr"><div id="qr"></div><div class="cap">用手機相機掃描，<br>開啟港→各景點→港路線<br><a id="qrlink" href="#" target="_blank" rel="noopener">或點此開啟 ›</a></div></div></div>
+  </div>
+  <div class="tips" id="tips"></div>
+  </div><!-- /itinerary -->
+
+  <div id="guide" style="display:none">
+    <div class="g-head">
+      <div class="g-eyebrow">MSC BELLISSIMA・行前懶人包</div>
+      <div class="g-title">登船與日本下船指南</div>
+      <div class="g-sub">基隆出發・日本（鹿兒島／宮崎油津港）下船重點｜跟團請以領隊與船上最新通知為準</div>
+    </div>
+
+    <div class="g-subnav">
+      <button class="g-tab active" data-gtab="gtrip" onclick="gtab('gtrip')">完整行程</button>
+      <button class="g-tab" data-gtab="gquick" onclick="gtab('gquick')">出發前</button>
+      <button class="g-tab" data-gtab="gland" onclick="gtab('gland')">日本下船</button>
+      <button class="g-tab" data-gtab="gret" onclick="gtab('gret')">回船提醒</button>
+    </div>
+
+    <div class="g-page active" id="gtrip">
+      <div class="g-h2">🗓️ 完整郵輪行程（7/4–7/9）</div>
+      <div class="g-notice">⚠ 各港抵離與下船集合時間以船公司及領隊當日通知為準；岸上行程詳見上方「DAY1 鹿兒島」「DAY2 宮崎」分頁。</div>
+      <div class="g-tl">
+        <div class="g-step"><b>7/4（六）基隆出發</b><div class="g-mini">MSC榮耀號 19:00 啟航（當地時間）。請提早登船辦理報到。</div></div>
+        <div class="g-step"><b>7/5（日）海上巡航</b><div class="g-mini">全日於船上，享受船上設施與活動。</div></div>
+        <div class="g-step"><b>7/6（一）鹿兒島・日本</b><div class="g-mini">08:00 抵達・19:00 起航。岸上行程見「DAY1」分頁。</div></div>
+        <div class="g-step"><b>7/7（二）宮崎（油津港）・日本</b><div class="g-mini">07:00 抵達・19:00 起航。自行包車行程見「7/7 宮崎」分頁。</div></div>
+        <div class="g-step"><b>7/8（三）海上巡航</b><div class="g-mini">全日於船上，整理行李、準備下船。</div></div>
+        <div class="g-step"><b>7/9（四）基隆抵達</b><div class="g-mini">07:00 抵達，依船方廣播分批下船返航。</div></div>
+      </div>
+    </div>
+
+    <div class="g-page" id="gquick">
+      <div class="g-h2">✅ 出發前確認</div>
+      <ul class="g-check">
+        <li><input type="checkbox" id="g1"><label for="g1">護照正本</label></li>
+        <li><input type="checkbox" id="g2"><label for="g2">每人1份護照資料頁影本</label></li>
+        <li><input type="checkbox" id="g3"><label for="g3">登船文件與旅行社集合通知</label></li>
+        <li><input type="checkbox" id="g4"><label for="g4">信用卡、日圓及個人常用藥</label></li>
+      </ul>
+    </div>
+
+    <div class="g-page" id="gland">
+      <div class="g-h2">🇯🇵 日本港口下船流程</div>
+      <div class="g-notice">自行包車旅客請依船方通知確認下船號碼牌與梯次，並與司機保持聯絡。</div>
+      <div class="g-tl">
+        <div class="g-step"><b>前一晚確認通知</b><div class="g-mini">查看領隊群組、船上日報及房內通知，確認集合時間與地點。</div></div>
+        <div class="g-step"><b>下船帶齊三樣</b><div class="g-mini">房卡、下船資料、護照影本。</div></div>
+        <div class="g-step"><b>日本入境查驗</b><div class="g-mini">海關可能在護照影本上貼附船舶觀光上陸許可並蓋章，請妥善保管。</div></div>
+        <div class="g-step"><b>通關後與包車司機集合</b><div class="g-mini">下船後依約定地點與包車司機會合，若延誤請立即聯絡。</div></div>
+      </div>
+      <div class="g-card alert" style="margin-top:12px"><span class="g-badge red">重要</span><b>護照影本／上陸許可文件不能遺失</b><div class="g-mini">不要摺到條碼或蓋章區，也不要當成宣傳單丟棄。當日返回郵輪時可能需再次查驗；若遺失，立刻聯絡領隊、港口人員或船方服務人員。</div></div>
+    </div>
+
+    <div class="g-page" id="gret">
+      <div class="g-h2">🕒 岸上行程與回船原則</div>
+      <div class="g-grid">
+        <div class="g-card"><span class="g-badge red">最晚回船</span><b>以領隊集合時間為準</b><div class="g-mini">不要只看郵輪啟航時間，請提早10–15分鐘抵達集合點。</div></div>
+        <div class="g-card"><span class="g-badge orange">隨身</span><b>房卡與護照影本隨身攜帶</b><div class="g-mini">上下船都可能查驗，已貼上陸許可並蓋章的護照影本不可遺失。</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<div class="overlay" id="overlay" onclick="if(event.target===this)closeDetail()"><div class="sheet" id="sheet"></div></div>
+
+<script>
+var SHIP='<svg width="32" height="20" viewBox="0 0 34 22"><path d="M2 13h30l-3 6H6z" fill="#fff" stroke="#326066" stroke-width="1.6" stroke-linejoin="round"/><rect x="9" y="4" width="16" height="8" rx="1.5" fill="#fff" stroke="#326066" stroke-width="1.6"/><rect x="12" y="6" width="3" height="3" fill="#D6455B"/><rect x="17" y="6" width="3" height="3" fill="#D6455B"/><path d="M17 1v3" stroke="#326066" stroke-width="1.6"/></svg>';
+var IC={
+  garden:'<svg width="44" height="44" viewBox="0 0 56 56"><path d="M28 6l5 7H23z" fill="#2E7D32"/><rect x="20" y="13" width="16" height="5" rx="1" fill="#3f9b46"/><rect x="26" y="18" width="4" height="9" fill="#7c5a3a"/><ellipse cx="28" cy="30" rx="14" ry="4" fill="#cfe6cf"/><path d="M14 34c5-3 23-3 28 0v3c-5 3-23 3-28 0z" fill="#86c98c"/><path d="M10 46c8-5 28-5 36 0" stroke="#7fc3cc" stroke-width="3" fill="none" stroke-linecap="round"/></svg>',
+  bino:'<svg width="44" height="44" viewBox="0 0 56 56"><path d="M8 40l12-20 8 12 6-9 14 17z" fill="#9bbf6e"/><path d="M34 23l6-9 8 12-6 .5z" fill="#7ba84f"/><circle cx="21" cy="34" r="6.5" fill="#E0871A"/><circle cx="35" cy="34" r="6.5" fill="#E0871A"/><rect x="25.5" y="31.5" width="5" height="3.5" fill="#B96A06"/><circle cx="21" cy="34" r="2.6" fill="#fff"/><circle cx="35" cy="34" r="2.6" fill="#fff"/></svg>',
+  food:'<svg width="44" height="44" viewBox="0 0 56 56"><path d="M12 28h24a12 12 0 0 1-24 0z" fill="#D6455B"/><rect x="10" y="28" width="28" height="3.5" rx="1.7" fill="#B22E44"/><rect x="39" y="26" width="2" height="14" rx="1" fill="#caa06a"/><path d="M40 14c4 0 5 7 0 7s-4-7 0-7z" fill="#fff" stroke="#e0c9a6" stroke-width="1"/><circle cx="40" cy="13" r="3" fill="#fbe4e8" stroke="#D6455B" stroke-width="1.4"/></svg>',
+  ferris:'<svg width="44" height="44" viewBox="0 0 56 56"><circle cx="28" cy="26" r="15" fill="none" stroke="#5B53A6" stroke-width="2.4"/><circle cx="28" cy="26" r="3.5" fill="#5B53A6"/><g stroke="#5B53A6" stroke-width="2.4"><path d="M28 11v30M13 26h30M17.5 15.5l21 21M38.5 15.5l-21 21"/></g><circle cx="28" cy="11" r="3" fill="#fbe4e8" stroke="#5B53A6" stroke-width="2"/><path d="M20 44h16l-2 5H22z" fill="#5B53A6"/></svg>',
+  moai:'<svg width="44" height="44" viewBox="0 0 56 56"><path d="M19 9c-3 0-5 3-5 9 0 5 1 9 2 13 1 4 3 7 3 11v5h18v-5c0-4 2-7 3-11 1-4 2-8 2-13 0-6-2-9-5-9-2 0-3 1-5 1h-8c-2 0-3-1-5-1z" fill="#7a8c7e"/><rect x="22" y="24" width="4" height="3" rx="1" fill="#3a4a3e"/><rect x="30" y="24" width="4" height="3" rx="1" fill="#3a4a3e"/><path d="M25 33h6" stroke="#3a4a3e" stroke-width="2" stroke-linecap="round"/></svg>',
+  waves:'<svg width="44" height="44" viewBox="0 0 56 56"><g stroke="#B96A06" stroke-width="3.2" fill="none" stroke-linecap="round"><path d="M10 20c4-4 8-4 12 0s8 4 12 0 8-4 12 0"/><path d="M10 30c4-4 8-4 12 0s8 4 12 0 8-4 12 0"/><path d="M10 40c4-4 8-4 12 0s8 4 12 0 8-4 12 0"/></g></svg>',
+  torii:'<svg width="44" height="44" viewBox="0 0 56 56"><g fill="#D6455B"><path d="M11 15h34l-2 5H13z"/><rect x="16" y="22" width="24" height="4"/><rect x="19" y="15" width="4.5" height="29"/><rect x="32.5" y="15" width="4.5" height="29"/></g></svg>',
+  bag:'<svg width="44" height="44" viewBox="0 0 56 56"><path d="M16 21h24l-2.5 23h-19z" fill="#5B53A6"/><path d="M22 21a6 6 0 0 1 12 0" fill="none" stroke="#5B53A6" stroke-width="2.6"/><circle cx="23" cy="30" r="2" fill="#fff"/><circle cx="33" cy="30" r="2" fill="#fff"/></svg>',
+  cart:'<svg width="44" height="44" viewBox="0 0 56 56"><g stroke="#136480" stroke-width="2.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M12 14h5l4 21h20l4-15H20"/></g><circle cx="25" cy="42" r="3" fill="#136480"/><circle cx="39" cy="42" r="3" fill="#136480"/></svg>'
+};
+
+var DAYS={
+ d1:{
+  title:'鹿兒島郵輪一日遊建議行程', tag:null,
+  ship:'MSC榮耀號　<b>08:00</b> 抵港・<b>19:00</b> 啟航',
+  weather:{lat:31.5966, lon:130.5571, date:'2026-07-06', label:'7/6（週一）鹿兒島', alts:true,
+    rainText:'☔ <b>預報有雨：建議啟動雨備</b> — 戶外的<b>城山展望台</b>改室內，三選一（點按鈕在地圖顯示）：',
+    sunText:'☀️ <b>預報晴熱：注意防曬補水</b> — 城山停留勿過久；仙巌園御殿、天文館、AMU 皆可避暑。',
+    fallback:'<b>7月鹿兒島典型天氣</b>：悶熱潮濕、午後易雷陣雨。'},
+  port:{q:'マリンポートかごしま', z:13, mapName:'🚢 下船碼頭（馬林港）', chip:'🚢 下船碼頭'},
+  alts:{aq:{q:'いおワールド かごしま水族館', z:16, mapName:'🐬 いおワールド水族館（雨備）'},
+        isf:{q:'維新ふるさと館 鹿児島', z:16, mapName:'🏯 維新故鄉館（雨備）'},
+        aeon:{q:'イオンモール鹿児島', z:15, mapName:'🛍 永旺夢樂城鹿兒島（雨備）'}},
+  overview:'https://maps.google.com/maps?saddr=31.5356,130.5538&daddr=31.6174,130.5772%20to:31.5962,130.5500%20to:31.5892,130.5560%20to:31.5843,130.5428&hl=ja&output=embed',
+  overviewHint:'碼頭＋四景點相對位置總覽（碼頭→仙巌園→城山→天文館→中央站）',
+  route:'https://www.google.com/maps/dir/?api=1&origin='+encodeURIComponent('マリンポートかごしま')+'&destination='+encodeURIComponent('マリンポートかごしま')+'&waypoints='+encodeURIComponent('仙巌園|城山展望台|天文館 むじゃき|アミュプラザ鹿児島')+'&travelmode=driving',
+  emg:{port:'マリンポートかごしま（鹿児島市中央港新町1）｜<b>16:50前回港・19:00開船</b>', guide:false},
+  tips:{label:'貼心提醒', items:['每停點預留<b>10–15分</b>緩衝','務必<b>16:50前回港</b>','天文館拱廊區由司機定點接送']},
+  timeline:[
+    {color:'#6aa9c2',dot:'🚢',t:'08:00 抵港',s:'下船通關'},
+    {color:'#2E7D32',dot:'1',t:'仙巌園',s:'09:30–11:30'},
+    {color:'#E0871A',dot:'2',t:'城山展望台',s:'11:50–12:20'},
+    {color:'#D6455B',dot:'3',t:'天文館商圈',s:'12:40–14:50'},
+    {color:'#5B53A6',dot:'4',t:'AMU PLAZA',s:'15:00–16:20'},
+    {color:'#6aa9c2',dot:'⚓',t:'19:00 啟航',s:'16:50前回港'}],
+  stops:[
+   {id:'p1', cls:'c1', n:'1', ttl:'仙巌園', time:'09:30–11:30', chip:'① 仙巌園', icon:IC.garden, q:'仙巌園 鹿児島', z:16, mapName:'① 仙巌園',
+    desc:'<b>世界文化遺產</b>島津家名園與御殿，以櫻島借景；園內<b>薩摩切子玻璃工坊</b>可看可買。',
+    intro:'仙巌園是江戶時代薩摩藩主島津家的別邸庭園，建於1658年，以雄偉的<b>櫻島為借景、錦江灣為池</b>，是日本大名庭園的代表作，並列入世界文化遺產「明治日本產業革命遺產」。園內可參觀島津家<b>御殿</b>、見證日本近代工業化起點的<b>尚古集成館</b>，以及能親眼看到職人吹製<b>薩摩切子</b>玻璃的工坊。一座景點同時滿足歷史、庭園、工藝與購物。',
+    meta:[['營業','9:00–17:00（最後入園16:30）'],['門票','成人¥1,600・中小學¥800（園＋尚古集成館＋御殿）'],['停留','約2小時'],['地址','鹿児島市吉野町9700-1']],
+    hl:['建於1658年，島津家別邸，以櫻島借景、錦江灣為池','世界文化遺產「明治日本產業革命遺產」','可看島津家御殿、近代工業起點尚古集成館','薩摩切子玻璃工坊：可看製程也能買，文化＋購物一次到位','主園區大致平緩、有餐廳可吹冷氣休息']},
+   {id:'p2', cls:'c2', n:'2', ttl:'城山展望台', time:'11:50–12:20', chip:'② 城山展望台', icon:IC.bino, q:'城山展望台 鹿児島', z:16, mapName:'② 城山展望台',
+    desc:'免費登高，<b>俯瞰鹿兒島市區與櫻島全景</b>，代表性<b>拍照打卡點</b>。緩坡5分鐘可達。',
+    intro:'城山是標高約107公尺的小山，山頂展望台可<b>360度俯瞰鹿兒島市區、錦江灣與正對岸的活火山櫻島</b>，是全市最具代表性的觀景與拍照點。山區同時是西南戰爭最後的激戰地、西鄉隆盛終焉之地，保留著茂密的自然林。從停車場沿緩坡步行約5分鐘即達，免費開放。',
+    meta:[['開放','24小時（免費）'],['步行','停車場緩坡約5分鐘'],['停留','約30分鐘'],['地址','鹿児島市城山町22']],
+    hl:['標高約107公尺，360度俯瞰市區、錦江灣與櫻島','鹿兒島最經典的櫻島全景拍照點','西南戰爭古戰場、西鄉隆盛終焉之地','停車場緩坡步行約5分鐘可達，免費','停留短、不費力，順路不繞']},
+   {id:'p3', cls:'c3', n:'3', ttl:'天文館商圈', time:'12:40–14:50', chip:'③ 天文館', icon:IC.food, q:'天文館 むじゃき 鹿児島', z:16, mapName:'③ 天文館商圈',
+    desc:'<b>黑豬肉</b>午餐＋<b>白熊刨冰</b>消暑；拱廊與<b>山形屋百貨</b>有遮蔭冷氣。含餐廳清單。',
+    intro:'天文館是鹿兒島最熱鬧的市中心商圈，名稱源自江戶時代島津家設立的天文觀測所「明時館（天文館）」。<b>有頂棚的拱廊商店街</b>連綿成網，餐廳、藥妝、百貨、伴手禮一應俱全，全程遮陽避雨。這裡也是鹿兒島名物<b>白熊刨冰</b>的發源地（むじゃき本店），夏天必嚐。',
+    meta:[['時間','商店多11:00起；むじゃき本店11:00–19:00'],['停留','約2小時（含午餐）'],['購物','拱廊商店街＋山形屋百貨B1美食地下街'],['地址','鹿児島市千日町・東千石町一帶']],
+    hl:['名稱源自島津家天文觀測所「明時館」','有頂棚拱廊，餐廳・藥妝・百貨齊全，遮陽避雨','白熊刨冰發源地（むじゃき本店，有電梯、兒童椅）','黑豬肉午餐名店多；山形屋B1美食地下街必逛'],
+    callout:'人多請提前數日預訂團體位／包廂，並告知有長輩與幼兒、需座位寬鬆。',
+    rest:[{n:'いちにいさん 天文館店', t:'黑豬肉涮涮鍋｜★★★★★ 可併桌、口味溫和，適合長輩幼兒'},
+          {n:'黒かつ亭', t:'黑豬肉炸豬排｜份量足、小孩接受度高'},
+          {n:'寿庵（じゅあん）', t:'黑豬肉料理｜菜色多元，部分店有包廂'},
+          {n:'天文館むじゃき 本店', t:'白熊刨冰發源店｜有電梯、兒童椅，午後消暑首選'}]},
+   {id:'p4', cls:'c4', n:'4', ttl:'AMU PLAZA 中央站', time:'15:00–16:20', chip:'④ 中央站', icon:IC.ferris, q:'アミュプラザ鹿児島', z:16, mapName:'④ AMU PLAZA 中央站',
+    desc:'車站直結大型商場，<b>伴手禮一站買齊</b>；頂樓<b>觀覽車</b>是小孩興奮點，順回程收尾。',
+    intro:'AMU PLAZA鹿兒島與九州新幹線終點「鹿兒島中央站」直結，是南九州規模最大的車站型購物中心，集結時尚、雜貨、美食與大量伴手禮專櫃，<b>回程採買最有效率</b>。頂樓的觀覽車「<b>アミュラン</b>」高約91公尺，可一覽市區與櫻島，是親子亮點。',
+    meta:[['營業','10:00–20:00'],['觀覽車','アミュラン 成人¥500・兒童¥300'],['停留','約80分鐘'],['地址','鹿児島市中央町1-1']],
+    hl:['鹿兒島中央站直結，南九州最大車站型商場','伴手禮一站買齊，回程採買最有效率','頂樓觀覽車アミュラン（約91公尺）可看市區與櫻島','位置順回程，最後一站不浪費移動時間']}
+  ]},
+
+ d2:{
+  title:'宮崎郵輪一日遊行程', tag:'7/7・自行包車',
+  ship:'MSC榮耀號　<b>07:00</b> 抵港・<b>19:00</b> 啟航',
+  weather:{lat:31.9077, lon:131.4202, date:'2026-07-07', label:'7/7（週二）宮崎', alts:false,
+    rainText:'☔ <b>預報有雨</b>：自行包車可與司機協調換點，請備<b>雨具</b>；<b>鬼之洗衣板、青島神社石階濕滑</b>請小心，長輩幼兒可在展望台／橋頭等候；<b>一番街拱廊、永旺</b>可避雨。',
+    sunText:'☀️ <b>預報晴熱</b>：日南海岸（摩艾、洗衣板、青島）幾乎無遮蔭，請<b>防曬、補水、戴帽</b>；室內避暑點為一番街與永旺。',
+    fallback:'<b>7月宮崎典型天氣</b>：濕熱、日照強、午後易雷陣雨。'},
+  port:{q:'油津港 日南', z:13, mapName:'🚢 油津港（下船碼頭）', chip:'🚢 油津港'},
+  alts:null,
+  overview:'https://maps.google.com/maps?saddr=31.5687,131.4066&daddr=31.6626,131.4612%20to:31.7686,131.4802%20to:31.8046,131.4749%20to:31.9151,131.4227%20to:31.9220,131.4554&hl=ja&output=embed',
+  overviewHint:'油津港＋五景點相對位置總覽（油津港→太陽花園→洗衣板→青島→一番街→永旺）',
+  route:'https://www.google.com/maps/dir/?api=1&origin='+encodeURIComponent('油津港 日南')+'&destination='+encodeURIComponent('油津港 日南')+'&waypoints='+encodeURIComponent('サンメッセ日南|鬼の洗濯板|青島神社|宮崎一番街商店街|イオンモール宮崎')+'&travelmode=driving',
+  emg:{port:'油津港（宮崎県日南市）｜<b>依包車司機約定時間・19:00開船</b>', guide:true},
+  tips:{label:'包車提醒', items:['各點依<b>包車預定時間</b>進行，請準時回車','一番街<b>自由用餐180分</b>，務必準時回集合點','鬼之洗衣板／青島<b>石階濕滑</b>，注意長輩幼兒','留意<b>港口歡送</b>時間，勿脫團']},
+  timeline:[
+    {color:'#6aa9c2',dot:'🚢',t:'07:00 抵港',s:'下船・集合'},
+    {color:'#2E7D32',dot:'1',t:'太陽花園',s:'40分'},
+    {color:'#E0871A',dot:'2',t:'鬼之洗衣板',s:'40分'},
+    {color:'#D6455B',dot:'3',t:'青島神宮',s:'50分'},
+    {color:'#5B53A6',dot:'4',t:'一番街用餐',s:'180分'},
+    {color:'#1c84a8',dot:'5',t:'永旺',s:'60分'},
+    {color:'#6aa9c2',dot:'⚓',t:'港口歡送',s:'19:00 啟航'}],
+  stops:[
+   {id:'p1', cls:'c1', n:'1', ttl:'日南太陽花園', time:'40分', chip:'① 太陽花園', icon:IC.moai, q:'サンメッセ日南', z:15, mapName:'① 日南太陽花園（サンメッセ日南）',
+    desc:'サンメッセ日南，經復活節島認證的<b>7尊摩艾像</b>（1:1），太平洋海景絕佳，<b>拍照打卡</b>必訪。',
+    intro:'サンメッセ日南是座落在日南海岸丘陵上、面向太平洋的主題公園。最大亮點是7尊與復活節島同尺寸的<b>摩艾像（モアイ）</b>——這是全世界唯一獲得復活節島長老正式授權重建的複製品，作為感謝日本協助修復原始摩艾的回禮。據說7尊各有不同守護（戀愛、學業、財運、健康等），依序觸摸可祈願。園內還有「地球感謝之鐘」、花壇、放牧山羊與居高臨下的海景展望台。',
+    meta:[['營業','9:30–17:00（週三公休；7/7週二開放）'],['門票','成人約¥1,000'],['停留','40分鐘'],['地址','日南市宮浦2650']],
+    hl:['7尊摩艾為全球唯一獲復活節島授權的同尺寸複製像','7尊各有不同祈願守護，可依序觸摸祈福','居高臨下的太平洋全景，日南海岸最佳拍照點','園區為丘陵地形，可搭付費園內接駁車省力','晴天無遮蔭，務必防曬補水']},
+   {id:'p2', cls:'c2', n:'2', ttl:'鬼之洗衣板', time:'40分', chip:'② 鬼之洗衣板', icon:IC.waves, q:'鬼の洗濯板 道の駅フェニックス', z:15, mapName:'② 鬼之洗衣板（堀切峠）',
+    desc:'鬼の洗濯板，海蝕形成的<b>波狀岩奇景</b>。道之驛フェニックス展望台輕鬆觀景；下到岩礁需走陡梯。',
+    intro:'鬼之洗衣板（鬼の洗濯板）是沿日南海岸綿延、環繞青島的大片<b>波狀岩</b>。約700萬年前的砂岩與泥岩互層地層，受地殼抬升傾斜後再經海浪長期侵蝕，較軟的泥岩被刷蝕、較硬的砂岩凸起，形成一條條規則的「洗衣板」狀凹凸，名列日本國家天然紀念物。退潮時露出範圍更大；從道之驛フェニックス（堀切峠）展望台即可輕鬆俯瞰整片奇景。',
+    meta:[['開放','24小時（免費）'],['停留','40分鐘'],['觀景','道之驛フェニックス展望台輕鬆看'],['地址','宮崎市内海 道の駅フェニックス']],
+    hl:['約700萬年前砂岩泥岩互層，經海蝕形成規則波狀岩','列為日本國家天然紀念物・名勝','環繞青島一圈，與青島神社連成一景','展望台輕鬆觀景；下到岩礁約260階陡梯，長輩幼兒建議在上方看','退潮時最壯觀；岩面與近浪區濕滑，注意安全']},
+   {id:'p3', cls:'c3', n:'3', ttl:'青島神宮', time:'50分', chip:'③ 青島神宮', icon:IC.torii, q:'青島神社', z:16, mapName:'③ 青島神宮',
+    desc:'青島神社，坐落海中小島、過<b>弥生橋</b>步行即達，四周<b>被鬼之洗衣板環繞</b>，亞熱帶植物與結緣信仰。',
+    intro:'青島神社坐落在周長約1.5公里的亞熱帶小島「青島」上，過<b>弥生橋</b>步行即達，全島覆蓋約5千株ビロウ椰子等亞熱帶植物（特別天然紀念物），四周被鬼之洗衣板環繞。神社祭祀「海幸山幸」神話中的<b>山幸彥與豐玉姬</b>，是山幸彥自海神宮歸來之地，以<b>結緣、安產、航海安全</b>靈驗著稱。可體驗投擲素燒土器祈願的「天の平瓮投げ」、以貝殼占卜等，叢林深處還有古樸的「元宮」。',
+    meta:[['開放','8:00–17:30'],['停留','50分鐘'],['交通','過弥生橋步行上島'],['地址','宮崎市青島2-13-1']],
+    hl:['海中小島神社，過弥生橋步行上島','全島被特別天然紀念物的亞熱帶植被覆蓋','四周被鬼之洗衣板環繞，景觀獨特','祭祀山幸彥與豐玉姬，結緣・安產・航海安全靈驗','可玩「天の平瓮投げ」擲土器祈願、貝殼占卜；叢林中有元宮','過橋與島上步行，海風強、地面濕滑請注意']},
+   {id:'p4', cls:'c4', n:'4', ttl:'一番街・自行用餐', time:'180分', chip:'④ 一番街', icon:IC.bag, q:'宮崎 一番街 商店街', z:16, mapName:'④ 一番街商店街',
+    desc:'宮崎市中心<b>一番街拱廊</b>，宮崎牛、雞肉南蠻等名店多。<b>自由活動＋自行用餐</b>，務必準時回集合。',
+    intro:'一番街是宮崎市中心的有頂棚拱廊商店街，緊鄰宮崎最熱鬧的「ニシタチ」美食娛樂區，餐廳、伴手禮、時尚店家林立，是<b>自行用餐與購物</b>的好去處，全程遮陽避雨。宮崎名物如雞肉南蠻、宮崎牛、地雞炭火燒、萵苣壽司卷都能在此一帶吃到。',
+    meta:[['類型','市中心拱廊商店街・餐廳眾多'],['停留','180分鐘（含自行用餐）'],['地址','宮崎市橘通西3丁目']],
+    hl:['有遮蔭拱廊，逛街不曬','自由活動時間長，可悠閒用餐＋購物'],
+    eat:['雞肉南蠻（元祖「おぐら本店」橘通東，徒步圈）','宮崎牛（頂級和牛午餐）','地雞炭火燒（炭香黑色地雞）','萵苣壽司卷（宮崎發明）','冷汁（夏季冷味噌湯泡飯）','芒果聖代（7月芒果季）'],
+    buy:['伴手禮：お菓子の日高（なんじゃこら大福、起司饅頭）','KONNE宮崎物產館（芒果加工品、燒酎）','芒果加工品：乾／果凍／蛋糕（密封可帶上船與回台）','山形屋百貨（橘通）','※藥妝／衣／鞋建議留到永旺一站買齊'],
+    callout:'自由活動＋自行用餐，請記下集合時間並準時回到集合處。注意：元祖雞肉南蠻「おぐら本店」週二公休，7/7（週二）想吃請改其他分店，或改吃宮崎牛／地雞。'},
+   {id:'p5', cls:'c5', n:'5', ttl:'永旺超市', time:'60分', chip:'⑤ 永旺', icon:IC.cart, q:'イオンモール宮崎', z:15, mapName:'⑤ 永旺夢樂城宮崎',
+    desc:'イオンモール宮崎，大型購物中心＋超市＋美食街，<b>伴手禮一站買齊</b>，冷氣足，回港前最後補貨。',
+    intro:'イオンモール宮崎是宮崎市規模最大的購物中心之一，集結藥妝、服飾、鞋類、超市與美食街，冷氣充足，是<b>回港前一站買齊藥妝與伴手禮</b>的最佳收尾點。超市的密封包裝零食可帶上船，但新鮮水果不可。',
+    meta:[['營業','10:00–21:00'],['停留','60分鐘'],['內容','購物中心＋超市＋美食街'],['地址','宮崎市新別府町江口862-1']],
+    hl:['大型室內商場，冷氣足','回港前最後採買點'],
+    buy:['藥妝：EVE止痛、龍角散、休足時間、蒸氣眼罩、安耐曬、面膜、整腸藥','衣服：UNIQLO、GU','鞋子：ABC-MART','超市：宮崎在地零食、調味料、伴手禮','密封包裝零食可帶上船（新鮮水果不可）'],
+    callout:'包車建議停留60分，建議鎖定「藥妝→UNIQLO/GU→ABC-MART→超市」動線，速戰速決。'}
+  ]}
+};
+
+var CUR=null;
+function searchUrl(q){ return 'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(q); }
+function navUrl(q){ return 'https://www.google.com/maps/dir/?api=1&destination='+encodeURIComponent(q)+'&travelmode=driving'; }
+function place(id){ if(id==='port') return CUR.port; if(CUR.alts&&CUR.alts[id]) return CUR.alts[id];
+  for(var i=0;i<CUR.stops.length;i++){ if(CUR.stops[i].id===id) return CUR.stops[i]; } return null; }
+
+function buildChips(){
+  var h='<button class="chip" data-place="ov" onclick="showOverview()">🔭 全程總覽</button>';
+  h+='<button class="chip" data-place="port" onclick="showMap(\'port\')">'+CUR.port.chip+'</button>';
+  CUR.stops.forEach(function(s){ h+='<button class="chip" data-place="'+s.id+'" onclick="showMap(\''+s.id+'\')">'+s.chip+'</button>'; });
+  h+='<a class="chip route" id="routechip" href="'+CUR.route+'" target="_blank" rel="noopener">🗺 全程導航</a>';
+  document.getElementById('chips').innerHTML=h;
+}
+function buildCards(){
+  var h='';
+  CUR.stops.forEach(function(s){
+    h+='<div class="card '+s.cls+'" tabindex="0" onclick="openDetail(\''+s.id+'\')" onkeydown="cardKey(event,\''+s.id+'\')">'
+      +'<div class="head"><div class="num">'+s.n+'</div><div class="ttl">'+s.ttl+'</div><div class="time">'+s.time+'</div></div>'
+      +'<div class="body"><div class="icon">'+s.icon+'</div><div class="desc">'+s.desc+'</div></div>'
+      +'<div class="tap">👆 點此看詳細資訊・地圖</div></div>';
+  });
+  document.getElementById('cards').innerHTML=h;
+}
+function buildTimeline(){
+  var h='';
+  CUR.timeline.forEach(function(t){
+    h+='<div class="step"><div class="dot" style="background:'+t.color+'">'+t.dot+'</div><div class="lab"><div class="t">'+t.t+'</div><div class="s">'+t.s+'</div></div></div>';
+  });
+  document.getElementById('timeline').innerHTML=h;
+}
+function buildEmergency(){
+  var e=CUR.emg;
+  var h='<div class="row"><span class="k">🚢 碼頭</span><span>'+e.port+'</span></div>'
+    +'<div class="row"><span class="k">🚓 緊急</span><span>警察 <a href="tel:110">110</a>　火災・救護 <a href="tel:119">119</a>　海難 <a href="tel:118">118</a></span></div>'
+    +'<div class="row"><span class="k">🆘 旅外救助</span><span>全球免付費 800-0885-0885（在日撥 <a href="tel:0010108000885 0885">001-010-800-0885-0885</a>）</span></div>'
+    +'<div class="row"><span class="k">🏢 福岡辦事處</span><span>台北駐福岡經濟文化辦事處（管轄九州）<a href="tel:+810927342810">092-734-2810</a></span></div>'
+    +'<div class="row"><span class="k">☎️ 外交部</span><span>緊急聯絡中心（台灣）<a href="tel:+886800085095">+886-800-085-095</a></span></div>';
+  if(e.guide) h+='<div class="row"><span class="k">👨‍✈️ 包車司機</span><span>＿＿＿＿＿＿＿（出發當天填入領隊／包車司機電話）</span></div>';
+  h+='<div class="note">＊電話與登船截止時間請以出發前船公司公告與官方網站為準。</div>';
+  document.getElementById('emg').innerHTML=h;
+}
+function buildTips(){
+  var h='<span class="k">'+CUR.tips.label+'</span>';
+  CUR.tips.items.forEach(function(it){ h+='<span>• '+it+'</span>'; });
+  document.getElementById('tips').innerHTML=h;
+}
+
+function showOverview(){
+  document.getElementById('gmap').src=CUR.overview;
+  document.getElementById('maphint').textContent=CUR.overviewHint+' — 點按鈕看單點，或點卡片看詳情';
+  var els=document.querySelectorAll('.chip[data-place]');
+  for(var i=0;i<els.length;i++){ els[i].classList.toggle('active', els[i].getAttribute('data-place')==='ov'); }
+}
+function showMap(id){
+  var p=place(id); if(!p) return;
+  document.getElementById('gmap').src='https://maps.google.com/maps?q='+encodeURIComponent(p.q)+'&z='+p.z+'&hl=ja&output=embed';
+  document.getElementById('maphint').textContent='目前顯示：'+(p.mapName||p.chip||'')+' — 點按鈕切換，或點卡片看詳細資訊';
+  var els=document.querySelectorAll('.chip[data-place]');
+  for(var i=0;i<els.length;i++){ els[i].classList.toggle('active', els[i].getAttribute('data-place')===id); }
+}
+
+function openDetail(id){
+  var d=place(id); if(!d||!d.meta) return;
+  var html='<div class="sh-head" style="background:'+cardColor(d.cls)+'"><div class="n">'+d.n+'</div><div class="ttl">'+d.ttl+'</div><button class="close" onclick="closeDetail()" aria-label="關閉">×</button></div><div class="sh-body">';
+  if(d.callout) html+='<div class="callout">⚠ '+d.callout+'</div>';
+  if(d.intro) html+='<p class="intro">'+d.intro+'</p>';
+  html+='<div class="meta">';
+  for(var i=0;i<d.meta.length;i++){ html+='<div class="mk">'+d.meta[i][0]+'</div><div>'+d.meta[i][1]+'</div>'; }
+  html+='</div><ul class="hl">';
+  for(var j=0;j<d.hl.length;j++){ html+='<li>'+d.hl[j]+'</li>'; }
+  html+='</ul>';
+  if(d.eat){ html+='<div class="seclbl">🍽 必吃</div><ul class="hl eat">'; for(var e=0;e<d.eat.length;e++){ html+='<li>'+d.eat[e]+'</li>'; } html+='</ul>'; }
+  if(d.buy){ html+='<div class="seclbl">🛍 必買</div><ul class="hl buy">'; for(var b=0;b<d.buy.length;b++){ html+='<li>'+d.buy[b]+'</li>'; } html+='</ul>'; }
+  if(d.rest){ html+='<div class="seclbl">🍽 餐廳口袋名單（點名稱開地圖）</div>';
+    for(var k=0;k<d.rest.length;k++){ html+='<div class="rest"><div class="rn">'+d.rest[k].n+'</div><div class="rt">'+d.rest[k].t+'</div><a href="'+searchUrl(d.rest[k].n+' 鹿児島')+'" target="_blank" rel="noopener">📍 在 Google 地圖開啟 ›</a></div>'; } }
+  html+='<div class="acts"><button class="btn map" onclick="showMap(\''+id+'\');closeDetail();">🗺 在上方地圖顯示</button>'
+      +'<a class="btn nav" href="'+navUrl(d.q)+'" target="_blank" rel="noopener">🚗 Google 導航前往</a></div></div>';
+  document.getElementById('sheet').innerHTML=html;
+  document.getElementById('overlay').classList.add('open');
+}
+function cardColor(cls){ return {c1:'#2E7D32',c2:'#E0871A',c3:'#D6455B',c4:'#5B53A6',c5:'#1c84a8'}[cls]||'#2b545b'; }
+function closeDetail(){ document.getElementById('overlay').classList.remove('open'); }
+function cardKey(e,id){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); openDetail(id); } }
+document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeDetail(); });
+
+var WMO={0:['☀️','晴'],1:['🌤️','大致晴'],2:['⛅','多雲'],3:['☁️','陰'],45:['🌫️','霧'],48:['🌫️','霧凇'],
+  51:['🌦️','毛毛雨'],53:['🌦️','毛毛雨'],55:['🌦️','毛毛雨'],61:['🌧️','小雨'],63:['🌧️','中雨'],65:['🌧️','大雨'],
+  71:['🌨️','小雪'],80:['🌦️','陣雨'],81:['🌧️','陣雨'],82:['⛈️','強陣雨'],95:['⛈️','雷雨'],96:['⛈️','雷雨冰雹'],99:['⛈️','強雷雨']};
+function altBtns(){ return '<div class="wxalts"><button class="wxbtn aq" onclick="showMap(\'aq\')">🐬 水族館</button><button class="wxbtn isf" onclick="showMap(\'isf\')">🏯 維新故鄉館</button><button class="wxbtn aeon" onclick="showMap(\'aeon\')">🛍 永旺夢樂城</button></div>'; }
+function loadWeather(){
+  var W=CUR.weather, tip=document.getElementById('wtip');
+  document.getElementById('wico').textContent='⛅';
+  document.getElementById('wdate').textContent=W.label+'天氣';
+  document.getElementById('wtemp').textContent='載入中…';
+  tip.className='tip'; tip.textContent='查詢當天預報中…（需連網）';
+  function fb(){ document.getElementById('wtemp').textContent='典型悶熱・需連網更新';
+    tip.className='tip'+(W.alts?' rain':''); tip.innerHTML=W.fallback+(W.alts?('雨備三選，點按鈕在地圖顯示：'+altBtns()):W.sunText); }
+  var url='https://api.open-meteo.com/v1/forecast?latitude='+W.lat+'&longitude='+W.lon+'&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=Asia%2FTokyo&start_date='+W.date+'&end_date='+W.date;
+  fetch(url).then(function(r){return r.json();}).then(function(d){
+    var dy=d.daily; if(!dy||!dy.time||!dy.time.length){ fb(); return; }
+    var code=dy.weather_code[0],tmax=dy.temperature_2m_max[0],tmin=dy.temperature_2m_min[0],pop=dy.precipitation_probability_max[0];
+    var w=WMO[code]||['🌡️','—'];
+    document.getElementById('wico').textContent=w[0];
+    document.getElementById('wdate').textContent=W.label+'・'+w[1];
+    var temp=(tmax!=null?Math.round(tmax):'—')+'° / '+(tmin!=null?Math.round(tmin):'—')+'°';
+    if(pop!=null) temp+='　降雨機率 '+pop+'%';
+    document.getElementById('wtemp').innerHTML=temp;
+    var rainy=(pop!=null&&pop>=50)||[51,53,55,61,63,65,80,81,82,95,96,99].indexOf(code)>=0;
+    if(rainy){ tip.className='tip rain'; tip.innerHTML=W.rainText+(W.alts?altBtns():''); }
+    else{ tip.className='tip'; tip.innerHTML=W.sunText; }
+  }).catch(fb);
+}
+function makeQR(){
+  document.getElementById('qrlink').href=CUR.route;
+  var box=document.getElementById('qr'); box.innerHTML='';
+  try{ new QRCode(box,{text:CUR.route,width:130,height:130,correctLevel:QRCode.CorrectLevel.M}); }
+  catch(e){ box.innerHTML='<div style="font-size:12px;color:#888;padding:20px">QR需連網載入<br>請用上方連結</div>'; }
+}
+
+function gtab(id){
+  var t=document.querySelectorAll('.g-tab'); for(var i=0;i<t.length;i++){ t[i].classList.toggle('active', t[i].getAttribute('data-gtab')===id); }
+  var p=document.querySelectorAll('.g-page'); for(var j=0;j<p.length;j++){ p[j].classList.toggle('active', p[j].id===id); }
+}
+function showGuide(){
+  var itinerary=document.getElementById('itinerary');
+  var guide=document.getElementById('guide');
+  var d1=document.getElementById('tab-d1');
+  var d2=document.getElementById('tab-d2');
+  var guideTab=document.getElementById('tab-guide');
+  if(itinerary) itinerary.style.display='none';
+  if(guide) guide.style.display='';
+  if(d1) d1.classList.remove('active');
+  if(d2) d2.classList.remove('active');
+  if(guideTab) guideTab.classList.add('active');
+  closeDetail();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function initChecklist(){
+  try{
+    var boxes=document.querySelectorAll('#guide input[type=checkbox]');
+    for(var i=0;i<boxes.length;i++){ (function(box){
+      var key='msc-pre-'+box.id;
+      try{ box.checked=localStorage.getItem(key)==='1'; }catch(e){}
+      box.addEventListener('change',function(){ try{ localStorage.setItem(key, box.checked?'1':'0'); }catch(e){} });
+    })(boxes[i]); }
+  }catch(e){}
+}
+function render(id){
+  CUR=DAYS[id];
+  var itinerary=document.getElementById('itinerary');
+  var guide=document.getElementById('guide');
+  var guideTab=document.getElementById('tab-guide');
+  var d1=document.getElementById('tab-d1');
+  var d2=document.getElementById('tab-d2');
+  if(itinerary) itinerary.style.display='';
+  if(guide) guide.style.display='none';
+  if(guideTab) guideTab.classList.remove('active');
+  if(d1) d1.classList.toggle('active', id==='d1');
+  if(d2) d2.classList.toggle('active', id==='d2');
+  document.getElementById('ttl').innerHTML=CUR.title+(CUR.tag?(' <span class="tag">'+CUR.tag+'</span>'):'');
+  document.getElementById('ship').innerHTML=SHIP+'<div>'+CUR.ship+'</div>';
+  buildChips(); buildCards(); buildTimeline(); buildEmergency(); buildTips();
+  closeDetail(); showOverview(); loadWeather(); makeQR();
+}
+document.addEventListener('DOMContentLoaded', function(){ render('d1'); initChecklist(); });
+</script>
+<script src="offline.js"></script>
+</body>
+</html>
