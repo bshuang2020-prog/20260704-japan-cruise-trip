@@ -186,7 +186,7 @@
         <div class="g-step"><b>7/4（六）基隆出發</b><div class="g-mini">MSC榮耀號 19:00 啟航（當地時間）。請提早登船辦理報到。</div></div>
         <div class="g-step"><b>7/5（日）海上巡航</b><div class="g-mini">全日於船上，享受船上設施與活動。</div></div>
         <div class="g-step"><b>7/6（一）鹿兒島・日本</b><div class="g-mini">08:00 抵達・19:00 起航。岸上行程見「DAY1」分頁。</div></div>
-        <div class="g-step"><b>7/7（二）宮崎（油津港）・日本</b><div class="g-mini">07:00 抵達・19:00 起航。自行包車行程見「7/7 宮崎」分頁。</div></div>
+        <div class="g-step"><b>7/7（二）宮崎（油津港）・日本</b><div class="g-mini">07:00 抵達・19:00 起航。參加 KKday 觀光一日遊，10:00 於油津港第10號岸壁集合。</div></div>
         <div class="g-step"><b>7/8（三）海上巡航</b><div class="g-mini">全日於船上，整理行李、準備下船。</div></div>
         <div class="g-step"><b>7/9（四）基隆抵達</b><div class="g-mini">07:00 抵達，依船方廣播分批下船返航。</div></div>
       </div>
@@ -204,12 +204,12 @@
 
     <div class="g-page" id="gland">
       <div class="g-h2">🇯🇵 日本港口下船流程</div>
-      <div class="g-notice">自行包車旅客請依船方通知確認下船號碼牌與梯次，並與司機保持聯絡。</div>
+      <div class="g-notice">宮崎參加 KKday 觀光一日遊，仍須依船方通知確認下船號碼牌與梯次；請預留通關及步行至集合點時間。</div>
       <div class="g-tl">
         <div class="g-step"><b>前一晚確認通知</b><div class="g-mini">查看領隊群組、船上日報及房內通知，確認集合時間與地點。</div></div>
         <div class="g-step"><b>下船帶齊三樣</b><div class="g-mini">房卡、下船資料、護照影本。</div></div>
         <div class="g-step"><b>日本入境查驗</b><div class="g-mini">海關可能在護照影本上貼附船舶觀光上陸許可並蓋章，請妥善保管。</div></div>
-        <div class="g-step"><b>通關後與包車司機集合</b><div class="g-mini">下船後依約定地點與包車司機會合，若延誤請立即聯絡。</div></div>
+        <div class="g-step"><b>7/7 宮崎 KKday 集合</b><div class="g-mini">集合地點：油津港第10號岸壁；集合時間10:00（日本時間），請最晚9:50抵達，逾時不候。</div></div>
       </div>
       <div class="g-card alert" style="margin-top:12px"><span class="g-badge red">重要</span><b>護照影本／上陸許可文件不能遺失</b><div class="g-mini">不要摺到條碼或蓋章區，也不要當成宣傳單丟棄。當日返回郵輪時可能需再次查驗；若遺失，立刻聯絡領隊、港口人員或船方服務人員。</div></div>
     </div>
@@ -293,19 +293,25 @@ var DAYS={
   ]},
 
  d2:{
-  title:'宮崎郵輪一日遊行程', tag:'7/7・自行包車',
+  title:'宮崎 KKday 觀光一日遊', tag:'7/7・KKday跟團',
   ship:'MSC榮耀號　<b>07:00</b> 抵港・<b>19:00</b> 啟航',
   weather:{lat:31.9077, lon:131.4202, date:'2026-07-07', label:'7/7（週二）宮崎', alts:false,
-    rainText:'☔ <b>預報有雨</b>：自行包車可與司機協調換點，請備<b>雨具</b>；<b>鬼之洗衣板、青島神社石階濕滑</b>請小心，長輩幼兒可在展望台／橋頭等候；<b>一番街拱廊、永旺</b>可避雨。',
+    rainText:'☔ <b>預報有雨</b>：請備<b>雨具</b>並依 KKday 導遊安排；<b>鬼之洗衣板、青島神社石階濕滑</b>請小心，長輩幼兒可在展望台／橋頭等候。',
     sunText:'☀️ <b>預報晴熱</b>：日南海岸（摩艾、洗衣板、青島）幾乎無遮蔭，請<b>防曬、補水、戴帽</b>；室內避暑點為一番街與永旺。',
     fallback:'<b>7月宮崎典型天氣</b>：濕熱、日照強、午後易雷陣雨。'},
-  port:{q:'油津港 日南', z:13, mapName:'🚢 油津港（下船碼頭）', chip:'🚢 油津港'},
+  kkday:{title:'KKday 集合資訊', items:[
+    ['集合地點','日本宮崎縣日南市 Hirano・油津港 第10號岸壁'],
+    ['集合時間','10:00（GMT+09:00，日本時間）'],
+    ['最晚抵達','09:50 前'],
+    ['重要提醒','逾時不候；請預留郵輪通關、下船梯次及步行時間']
+  ]},
+  port:{q:'油津港 第10号岸壁', z:16, mapName:'🚢 KKday集合：油津港第10號岸壁', chip:'🎫 KKday集合點'},
   alts:null,
   overview:'https://maps.google.com/maps?saddr=31.5687,131.4066&daddr=31.6626,131.4612%20to:31.7686,131.4802%20to:31.8046,131.4749%20to:31.9151,131.4227%20to:31.9220,131.4554&hl=ja&output=embed',
-  overviewHint:'油津港＋五景點相對位置總覽（油津港→太陽花園→洗衣板→青島→一番街→永旺）',
+  overviewHint:'KKday 行程景點位置總覽；實際順序、停留時間與上下車地點以當日導遊安排為準。',
   route:'https://www.google.com/maps/dir/?api=1&origin='+encodeURIComponent('油津港 日南')+'&destination='+encodeURIComponent('油津港 日南')+'&waypoints='+encodeURIComponent('サンメッセ日南|鬼の洗濯板|青島神社|宮崎一番街商店街|イオンモール宮崎')+'&travelmode=driving',
-  emg:{port:'油津港（宮崎県日南市）｜<b>依包車司機約定時間・19:00開船</b>', guide:true},
-  tips:{label:'包車提醒', items:['各點依<b>包車預定時間</b>進行，請準時回車','一番街<b>自由用餐180分</b>，務必準時回集合點','鬼之洗衣板／青島<b>石階濕滑</b>，注意長輩幼兒','留意<b>港口歡送</b>時間，勿脫團']},
+  emg:{port:'油津港 第10號岸壁｜<b>10:00集合、最晚9:50抵達・逾時不候</b>', guide:true},
+  tips:{label:'KKday跟團提醒', items:['集合時間為日本時間<b>10:00</b>，請最晚<b>9:50</b>抵達油津港第10號岸壁','逾時不候，請提早確認下船號碼牌與通關時間','各景點停留及用餐時間以<b>KKday導遊</b>現場宣布為準','離隊前務必確認集合時間與集合地點，避免延誤全團']},
   timeline:[
     {color:'#6aa9c2',dot:'🚢',t:'07:00 抵港',s:'下船・集合'},
     {color:'#2E7D32',dot:'1',t:'太陽花園',s:'40分'},
@@ -344,7 +350,7 @@ var DAYS={
     meta:[['營業','10:00–21:00'],['停留','60分鐘'],['內容','購物中心＋超市＋美食街'],['地址','宮崎市新別府町江口862-1']],
     hl:['大型室內商場，冷氣足','回港前最後採買點'],
     buy:['藥妝：EVE止痛、龍角散、休足時間、蒸氣眼罩、安耐曬、面膜、整腸藥','衣服：UNIQLO、GU','鞋子：ABC-MART','超市：宮崎在地零食、調味料、伴手禮','密封包裝零食可帶上船（新鮮水果不可）'],
-    callout:'包車建議停留60分，建議鎖定「藥妝→UNIQLO/GU→ABC-MART→超市」動線，速戰速決。'}
+    callout:'停留時間以KKday導遊當日安排為準，建議鎖定「藥妝→UNIQLO/GU→ABC-MART→超市」動線，速戰速決。'}
   ]}
 };
 
@@ -385,7 +391,7 @@ function buildEmergency(){
     +'<div class="row"><span class="k">🆘 旅外救助</span><span>全球免付費 800-0885-0885（在日撥 <a href="tel:0010108000885 0885">001-010-800-0885-0885</a>）</span></div>'
     +'<div class="row"><span class="k">🏢 福岡辦事處</span><span>台北駐福岡經濟文化辦事處（管轄九州）<a href="tel:+810927342810">092-734-2810</a></span></div>'
     +'<div class="row"><span class="k">☎️ 外交部</span><span>緊急聯絡中心（台灣）<a href="tel:+886800085095">+886-800-085-095</a></span></div>';
-  if(e.guide) h+='<div class="row"><span class="k">👨‍✈️ 包車司機</span><span>＿＿＿＿＿＿＿（出發當天填入領隊／包車司機電話）</span></div>';
+  if(e.guide) h+='<div class="row"><span class="k">👨‍✈️ KKday導遊／客服</span><span>＿＿＿＿＿＿＿（出發前填入訂單憑證上的聯絡方式）</span></div>';
   h+='<div class="note">＊電話與登船截止時間請以出發前船公司公告與官方網站為準。</div>';
   document.getElementById('emg').innerHTML=h;
 }

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'kyushu-cruise-offline-v5';
+const CACHE_NAME = 'kyushu-cruise-offline-v6';
 const LOCAL_ASSETS = [
   './', './index.html','./guide/index.html','./guide/before-trip.html','./guide/embarkation.html','./guide/japan-disembark.html','./guide/return-home.html', './offline.js',
   './ship/index.html','./ship/day1.html','./ship/day2.html','./ship/day5.html','./ship/day6.html','./ship/free.html','./ship/family.html','./ship/paid.html',

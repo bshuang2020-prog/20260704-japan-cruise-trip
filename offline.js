@@ -1,5 +1,5 @@
 (function(){
-  const CACHE_NAME='kyushu-cruise-offline-v5';
+  const CACHE_NAME='kyushu-cruise-offline-v6';
   const REMOTE_ASSETS=[
     'https://www.msccruises.com/int/-/media/global-contents/ships/fleet/bellissima/public-areas/be_galleria_bellissima.jpg?as=1&bc=transparent&hash=94D485D919A7F9E7DCF0BAB8500EF5D4&mh=600&mw=960',
     'https://www.msccruises.com/int/-/media/global-contents/ships/fleet/bellissima/public-areas/london-theatre_be.jpg?as=1&bc=transparent&hash=53CEEEFD17906DF4C79193B097BAE810&mh=600&mw=960',
